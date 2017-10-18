@@ -14,7 +14,13 @@ class ScheduleTest extends TestCase
 
     public function test_有預設屬性()
     {
-        $config = new Schedule();
+        $inputStub = [
+            'ext'      => '',
+            'interval' => '',
+            'time'     => '',
+        ];
+
+        $config = new Schedule($inputStub);
 
         $this->assertObjectHasAttribute('ext', $config);
         $this->assertObjectHasAttribute('interval', $config);

@@ -18,19 +18,22 @@ class Schedule
     private $time;
 
     /**
+     * Schedule constructor.
+     * @param array $item
+     */
+    public function __construct(array $item)
+    {
+        $this->ext      = $item['ext'];
+        $this->interval = $item['interval'];
+        $this->time     = $item['time'];
+    }
+
+    /**
      * @return string
      */
     public function getExt(): string
     {
         return $this->ext;
-    }
-
-    /**
-     * @param string $ext
-     */
-    public function setExt(string $ext)
-    {
-        $this->ext = $ext;
     }
 
     /**
@@ -42,26 +45,10 @@ class Schedule
     }
 
     /**
-     * @param string $interval
-     */
-    public function setInterval(string $interval)
-    {
-        $this->interval = $interval;
-    }
-
-    /**
      * @return string
      */
     public function getTime(): string
     {
         return $this->time;
-    }
-
-    /**
-     * @param string $time
-     */
-    public function setTime(string $time)
-    {
-        $this->time = $time;
     }
 }

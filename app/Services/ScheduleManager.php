@@ -60,11 +60,7 @@ class ScheduleManager
                 throw new InvalidArgumentException('json file 格式錯誤');
             }
 
-            $schedule = new Schedule();
-            $schedule->setExt($item['ext']);
-            $schedule->setInterval($item['interval']);
-            $schedule->setTime($item['time']);
-            return $schedule;
+            return new Schedule($item);
         })->toArray();
     }
 
