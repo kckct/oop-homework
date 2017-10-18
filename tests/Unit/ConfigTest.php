@@ -14,7 +14,19 @@ class ConfigTest extends TestCase
 
     public function test_有預設屬性()
     {
-        $config = new Config();
+        $inputStub = [
+            'ext'              => '',
+            'location'         => '',
+            'subDirectory'     => '',
+            'unit'             => '',
+            'remove'           => '',
+            'handler'          => '',
+            'destination'      => '',
+            'dir'              => '',
+            'connectionString' => '',
+        ];
+
+        $config = new Config($inputStub);
 
         $this->assertObjectHasAttribute('connectionString', $config);
         $this->assertObjectHasAttribute('destination', $config);

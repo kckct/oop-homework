@@ -60,17 +60,7 @@ class ConfigManager
                 throw new InvalidArgumentException('json file 格式錯誤');
             }
 
-            $config = new Config();
-            $config->setConnectionString($item['connectionString']);
-            $config->setDestination($item['destination']);
-            $config->setDir($item['dir']);
-            $config->setExt($item['ext']);
-            $config->setHandler($item['handler']);
-            $config->setLocation($item['location']);
-            $config->setRemove($item['remove']);
-            $config->setSubDirectory($item['subDirectory']);
-            $config->setUnit($item['unit']);
-            return $config;
+            return new Config($item);
         })->toArray();
     }
 
