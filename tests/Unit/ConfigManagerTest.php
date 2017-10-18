@@ -27,8 +27,11 @@ class ConfigManagerTest extends TestCase
         $this->assertEquals(3, $this->configManager->count());
     }
 
-    public function test_可取得configs陣列()
+    public function test_可取得configs陣列且為Config物件()
     {
-        $this->assertTrue(is_array($this->configManager->getConfigs()));
+        $configs = $this->configManager->getConfigs();
+
+        $this->assertTrue(is_array($configs));
+        $this->assertInstanceOf(Config::class, $configs[0]);
     }
 }

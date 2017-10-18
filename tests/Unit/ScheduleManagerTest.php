@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Services\Schedule;
 use Tests\TestCase;
 use App\Services\ScheduleManager;
 
@@ -26,8 +27,11 @@ class ScheduleManagerTest extends TestCase
         $this->assertEquals(3, $this->scheduleManger->count());
     }
 
-    public function test_可取得schedules陣列()
+    public function test_可取得schedules陣列且為Schedule物件()
     {
-        $this->assertTrue(is_array($this->scheduleManger->getSchedules()));
+        $schedules = $this->scheduleManger->getSchedules();
+
+        $this->assertTrue(is_array($schedules));
+        $this->assertInstanceOf(Schedule::class, $schedules[0]);
     }
 }
