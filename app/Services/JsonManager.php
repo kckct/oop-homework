@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
 
 /**
  * Class JsonManager
@@ -22,12 +21,7 @@ abstract class JsonManager
         $fileContent = file_get_contents(app_path() . $configPath);
 
         // json decode
-        $configArray = json_decode($fileContent, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new InvalidArgumentException('json file 格式錯誤');
-        }
-
-        return collect($configArray);
+        return collect(json_decode($fileContent, true));
     }
 
     /**
