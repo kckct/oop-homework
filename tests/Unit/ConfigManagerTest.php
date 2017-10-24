@@ -15,6 +15,7 @@ class ConfigManagerTest extends TestCase
         parent::setUp();
 
         $this->configManager = new ConfigManager();
+        $this->configManager->processConfigs();
     }
 
     public function test_有configs屬性()

@@ -14,14 +14,6 @@ class ConfigManager
     private $configs = [];
 
     /**
-     * ConfigManager constructor.
-     */
-    public function __construct()
-    {
-        $this->processConfigs();
-    }
-
-    /**
      * @return Config[]
      */
     public function getConfigs(): array
@@ -42,7 +34,7 @@ class ConfigManager
      * 讀取 config.json
      * @return void
      */
-    private function processConfigs()
+    public function processConfigs()
     {
         // 讀取 config.json
         $fileContent = file_get_contents(app_path() . '/../config/config.json');
