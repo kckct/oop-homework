@@ -2,10 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Services\Config;
 use Tests\TestCase;
+use App\Services\Config;
 use App\Services\ConfigManager;
 
+/**
+ * Class ConfigManagerTest
+ * @package Tests\Feature
+ */
 class ConfigManagerTest extends TestCase
 {
     private $configManager;
@@ -15,7 +19,7 @@ class ConfigManagerTest extends TestCase
         parent::setUp();
 
         $this->configManager = new ConfigManager();
-        $this->configManager->processConfigs();
+        $this->configManager->processJsonConfig();
     }
 
     public function test_有configs屬性()

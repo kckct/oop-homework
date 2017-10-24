@@ -2,10 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Services\Schedule;
 use Tests\TestCase;
+use App\Services\Schedule;
 use App\Services\ScheduleManager;
 
+/**
+ * Class ScheduleManagerTest
+ * @package Tests\Feature
+ */
 class ScheduleManagerTest extends TestCase
 {
     private $scheduleManger;
@@ -15,7 +19,7 @@ class ScheduleManagerTest extends TestCase
         parent::setUp();
 
         $this->scheduleManger = new ScheduleManager();
-        $this->scheduleManger->processSchedules();
+        $this->scheduleManger->processJsonConfig();
     }
 
     public function test_有schedules屬性()
