@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Services\JsonManager;
 use Tests\TestCase;
 use App\Services\MyBackupService;
+use App\Services\JsonManager;
 use App\Services\ConfigManager;
 use App\Services\ScheduleManager;
 

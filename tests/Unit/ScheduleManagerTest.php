@@ -36,7 +36,11 @@ class ScheduleManagerTest extends TestCase
     {
         $schedules = $this->scheduleManger->getSchedules();
 
+        // schedules 屬性為 array
         $this->assertTrue(is_array($schedules));
+        // schedules array 皆為 Schedule 物件
         $this->assertInstanceOf(Schedule::class, $schedules[0]);
+        $this->assertInstanceOf(Schedule::class, $schedules[1]);
+        $this->assertInstanceOf(Schedule::class, $schedules[2]);
     }
 }

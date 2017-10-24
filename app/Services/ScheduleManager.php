@@ -37,7 +37,7 @@ class ScheduleManager extends JsonManager
      */
     public function processJsonConfig()
     {
-        // 讀取 json 轉成 array
+        // 讀取 json 轉成 Collection Object
         $scheduleArray = $this->getJsonObject(self::CONFIG_PATH);
 
         // 將 schedule.json 內容整理成 Schedule[] $schedules

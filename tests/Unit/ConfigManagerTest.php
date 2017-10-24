@@ -36,7 +36,11 @@ class ConfigManagerTest extends TestCase
     {
         $configs = $this->configManager->getConfigs();
 
+        // configs 屬性為 array
         $this->assertTrue(is_array($configs));
+        // configs array 皆為 Config 物件
         $this->assertInstanceOf(Config::class, $configs[0]);
+        $this->assertInstanceOf(Config::class, $configs[1]);
+        $this->assertInstanceOf(Config::class, $configs[2]);
     }
 }
