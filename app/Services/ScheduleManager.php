@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use InvalidArgumentException;
-
 /**
  * Class ScheduleManager
  * @package App\Services
  */
-class ScheduleManager
+class ScheduleManager extends JsonManager
 {
+    /** @var string schedule.json 路徑 */
+    const CONFIG_PATH = '/../config/schedule.json';
+
     /** @var Schedule[] $schedules */
     private $schedules = [];
 
@@ -27,42 +28,21 @@ class ScheduleManager
      */
     public function count(): int
     {
-        return count($this->schedules);
+        return $this->configCount($this->schedules);
     }
 
     /**
-     * 讀取 schedule.json
+     * 將 json 設定檔處理成可讓外部使用的 array
      * @return void
      */
-    public function processSchedules()
+    public function processJsonConfig()
     {
-        // 讀取 schedule.json
-        $fileContent = file_get_contents(app_path() . '/../config/schedule.json');
-
-        // json decode
-        $scheduleArray = json_decode($fileContent, true);
-        if (json_last_error() !== JSON_ERROR_NONE || !isset($scheduleArray['schedules'])) {
-            throw new InvalidArgumentException('json file 格式錯誤');
-        }
+        // 讀取 json 轉成 array
+        $scheduleArray = $this->getJsonObject(self::CONFIG_PATH);
 
         // 將 schedule.json 內容整理成 Schedule[] $schedules
-        $this->schedules = collect($scheduleArray['schedules'])->map(function($item) {
-            // 檢查 schedule.json 各 schedule key 是否存在
-            if (!$this->isScheduleFieldValid($item)) {
-                throw new InvalidArgumentException('json file 格式錯誤');
-            }
-
-            return new Schedule($item);
+        $this->schedules = collect($scheduleArray->get('schedules', []))->map(function($item) {
+            return new Schedule(collect($item));
         })->toArray();
-    }
-
-    /**
-     * 檢查 schedule.json 各 schedule key 是否存在
-     * @param array $schedule
-     * @return bool
-     */
-    private function isScheduleFieldValid(array $schedule): bool
-    {
-        return isset($schedule['ext']) && isset($schedule['interval']) && isset($schedule['time']);
     }
 }

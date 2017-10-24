@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use InvalidArgumentException;
-
 /**
  * Class ConfigManager
  * @package App\Services
  */
-class ConfigManager
+class ConfigManager extends JsonManager
 {
+    /** @var string config.json 路徑 */
+    const CONFIG_PATH = '/../config/config.json';
+
     /** @var Config[] $configs */
     private $configs = [];
 
@@ -27,44 +28,21 @@ class ConfigManager
      */
     public function count(): int
     {
-        return count($this->configs);
+        return $this->configCount($this->configs);
     }
 
     /**
-     * 讀取 config.json
+     * 將 json 設定檔處理成可讓外部使用的 array
      * @return void
      */
-    public function processConfigs()
+    public function processJsonConfig()
     {
-        // 讀取 config.json
-        $fileContent = file_get_contents(app_path() . '/../config/config.json');
-
-        // json decode
-        $configArray = json_decode($fileContent, true);
-        if (json_last_error() !== JSON_ERROR_NONE || !isset($configArray['configs'])) {
-            throw new InvalidArgumentException('json file 格式錯誤');
-        }
+        // 讀取 json 轉成 Collection Object
+        $configObject = $this->getJsonObject(self::CONFIG_PATH);
 
         // 將 config.json 內容整理成 Config[] $configs
-        $this->configs = collect($configArray['configs'])->map(function($item) {
-            // 檢查 config.json 各 config key 是否存在
-            if (!$this->isConfigFieldValid($item)) {
-                throw new InvalidArgumentException('json file 格式錯誤');
-            }
-
-            return new Config($item);
+        $this->configs = collect($configObject->get('configs', []))->map(function($item) {
+            return new Config(collect($item));
         })->toArray();
-    }
-
-    /**
-     * 檢查 config.json 各 config key 是否存在
-     * @param array $config
-     * @return bool
-     */
-    private function isConfigFieldValid(array $config): bool
-    {
-        return isset($config['connectionString']) && isset($config['destination']) && isset($config['dir'])
-            && isset($config['ext']) && isset($config['handler']) && isset($config['location'])
-            && isset($config['remove']) && isset($config['subDirectory']) && isset($config['unit']);
     }
 }
