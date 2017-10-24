@@ -3,8 +3,13 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Services\Schedule;
 use App\Services\ScheduleManager;
 
+/**
+ * Class ScheduleManagerTest
+ * @package Tests\Feature
+ */
 class ScheduleManagerTest extends TestCase
 {
     private $scheduleManger;
@@ -14,6 +19,7 @@ class ScheduleManagerTest extends TestCase
         parent::setUp();
 
         $this->scheduleManger = new ScheduleManager();
+        $this->scheduleManger->processJsonConfig();
     }
 
     public function test_有schedules屬性()
@@ -26,8 +32,15 @@ class ScheduleManagerTest extends TestCase
         $this->assertEquals(3, $this->scheduleManger->count());
     }
 
-    public function test_可取得schedules陣列()
+    public function test_可取得schedules陣列且為Schedule物件()
     {
-        $this->assertTrue(is_array($this->scheduleManger->getSchedules()));
+        $schedules = $this->scheduleManger->getSchedules();
+
+        // schedules 屬性為 array
+        $this->assertTrue(is_array($schedules));
+        // schedules array 皆為 Schedule 物件
+        $this->assertInstanceOf(Schedule::class, $schedules[0]);
+        $this->assertInstanceOf(Schedule::class, $schedules[1]);
+        $this->assertInstanceOf(Schedule::class, $schedules[2]);
     }
 }

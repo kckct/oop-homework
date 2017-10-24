@@ -5,6 +5,10 @@ namespace Tests\Feature;
 use App\Services\Config;
 use Tests\TestCase;
 
+/**
+ * Class ConfigTest
+ * @package Tests\Feature
+ */
 class ConfigTest extends TestCase
 {
     public function setUp()
@@ -14,7 +18,19 @@ class ConfigTest extends TestCase
 
     public function test_有預設屬性()
     {
-        $config = new Config();
+        $inputStub = collect([
+            'ext'              => '',
+            'location'         => '',
+            'subDirectory'     => '',
+            'unit'             => '',
+            'remove'           => '',
+            'handler'          => '',
+            'destination'      => '',
+            'dir'              => '',
+            'connectionString' => '',
+        ]);
+
+        $config = new Config($inputStub);
 
         $this->assertObjectHasAttribute('connectionString', $config);
         $this->assertObjectHasAttribute('destination', $config);

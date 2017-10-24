@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Collection;
+
 /**
  * Class Config
  * @package App\Services
@@ -36,19 +38,28 @@ class Config
     private $unit;
 
     /**
+     * Config constructor.
+     * @param Collection $item
+     */
+    public function __construct(Collection $item)
+    {
+        $this->connectionString = $item->get('connectionString', '');
+        $this->destination      = $item->get('destination', '');
+        $this->dir              = $item->get('dir', '');
+        $this->ext              = $item->get('ext', '');
+        $this->handler          = $item->get('handler', '');
+        $this->location         = $item->get('location', '');
+        $this->remove           = $item->get('remove', false);
+        $this->subDirectory     = $item->get('subDirectory', false);
+        $this->unit             = $item->get('unit', '');
+    }
+
+    /**
      * @return string
      */
     public function getConnectionString(): string
     {
         return $this->connectionString;
-    }
-
-    /**
-     * @param string $connectionString
-     */
-    public function setConnectionString(string $connectionString)
-    {
-        $this->connectionString = $connectionString;
     }
 
     /**
@@ -60,27 +71,11 @@ class Config
     }
 
     /**
-     * @param string $destination
-     */
-    public function setDestination(string $destination)
-    {
-        $this->destination = $destination;
-    }
-
-    /**
      * @return string
      */
     public function getDir(): string
     {
         return $this->dir;
-    }
-
-    /**
-     * @param string $dir
-     */
-    public function setDir(string $dir)
-    {
-        $this->dir = $dir;
     }
 
     /**
@@ -92,27 +87,11 @@ class Config
     }
 
     /**
-     * @param string $ext
-     */
-    public function setExt(string $ext)
-    {
-        $this->ext = $ext;
-    }
-
-    /**
      * @return string
      */
     public function getHandler(): string
     {
         return $this->handler;
-    }
-
-    /**
-     * @param string $handler
-     */
-    public function setHandler(string $handler)
-    {
-        $this->handler = $handler;
     }
 
     /**
@@ -124,27 +103,11 @@ class Config
     }
 
     /**
-     * @param string $location
-     */
-    public function setLocation(string $location)
-    {
-        $this->location = $location;
-    }
-
-    /**
      * @return bool
      */
     public function isRemove(): bool
     {
         return $this->remove;
-    }
-
-    /**
-     * @param bool $remove
-     */
-    public function setRemove(bool $remove)
-    {
-        $this->remove = $remove;
     }
 
     /**
@@ -156,26 +119,10 @@ class Config
     }
 
     /**
-     * @param bool $subDirectory
-     */
-    public function setSubDirectory(bool $subDirectory)
-    {
-        $this->subDirectory = $subDirectory;
-    }
-
-    /**
      * @return string
      */
     public function getUnit(): string
     {
         return $this->unit;
-    }
-
-    /**
-     * @param string $unit
-     */
-    public function setUnit(string $unit)
-    {
-        $this->unit = $unit;
     }
 }

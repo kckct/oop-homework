@@ -5,6 +5,10 @@ namespace Tests\Feature;
 use App\Services\Schedule;
 use Tests\TestCase;
 
+/**
+ * Class ScheduleTest
+ * @package Tests\Feature
+ */
 class ScheduleTest extends TestCase
 {
     public function setUp()
@@ -14,7 +18,13 @@ class ScheduleTest extends TestCase
 
     public function test_有預設屬性()
     {
-        $config = new Schedule();
+        $inputStub = collect([
+            'ext'      => '',
+            'interval' => '',
+            'time'     => '',
+        ]);
+
+        $config = new Schedule($inputStub);
 
         $this->assertObjectHasAttribute('ext', $config);
         $this->assertObjectHasAttribute('interval', $config);
