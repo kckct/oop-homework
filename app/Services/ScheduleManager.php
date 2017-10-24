@@ -14,14 +14,6 @@ class ScheduleManager
     private $schedules = [];
 
     /**
-     * ScheduleManager constructor.
-     */
-    public function __construct()
-    {
-        $this->processSchedules();
-    }
-
-    /**
      * @return Schedule[]
      */
     public function getSchedules(): array
@@ -42,7 +34,7 @@ class ScheduleManager
      * 讀取 schedule.json
      * @return void
      */
-    private function processSchedules()
+    public function processSchedules()
     {
         // 讀取 schedule.json
         $fileContent = file_get_contents(app_path() . '/../config/schedule.json');

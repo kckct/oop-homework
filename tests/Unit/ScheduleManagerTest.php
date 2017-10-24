@@ -15,6 +15,7 @@ class ScheduleManagerTest extends TestCase
         parent::setUp();
 
         $this->scheduleManger = new ScheduleManager();
+        $this->scheduleManger->processSchedules();
     }
 
     public function test_有schedules屬性()
