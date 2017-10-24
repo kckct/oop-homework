@@ -14,7 +14,7 @@ class ConfigTest extends TestCase
 
     public function test_有預設屬性()
     {
-        $inputStub = [
+        $inputStub = collect([
             'ext'              => '',
             'location'         => '',
             'subDirectory'     => '',
@@ -24,7 +24,7 @@ class ConfigTest extends TestCase
             'destination'      => '',
             'dir'              => '',
             'connectionString' => '',
-        ];
+        ]);
 
         $config = new Config($inputStub);
 

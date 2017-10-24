@@ -14,11 +14,11 @@ class ScheduleTest extends TestCase
 
     public function test_有預設屬性()
     {
-        $inputStub = [
+        $inputStub = collect([
             'ext'      => '',
             'interval' => '',
             'time'     => '',
-        ];
+        ]);
 
         $config = new Schedule($inputStub);
 

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Collection;
+
 /**
  * Class Schedule
  * @package App\Services
@@ -19,13 +21,13 @@ class Schedule
 
     /**
      * Schedule constructor.
-     * @param array $item
+     * @param Collection $item
      */
-    public function __construct(array $item)
+    public function __construct(Collection $item)
     {
-        $this->ext      = $item['ext'];
-        $this->interval = $item['interval'];
-        $this->time     = $item['time'];
+        $this->ext      = $item->get('ext', '');
+        $this->interval = $item->get('interval', '');
+        $this->time     = $item->get('time', '');
     }
 
     /**

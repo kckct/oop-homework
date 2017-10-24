@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Collection;
+
 /**
  * Class Config
  * @package App\Services
@@ -37,19 +39,19 @@ class Config
 
     /**
      * Config constructor.
-     * @param array $item
+     * @param Collection $item
      */
-    public function __construct(array $item)
+    public function __construct(Collection $item)
     {
-        $this->connectionString = $item['connectionString'];
-        $this->destination      = $item['destination'];
-        $this->dir              = $item['dir'];
-        $this->ext              = $item['ext'];
-        $this->handler          = $item['handler'];
-        $this->location         = $item['location'];
-        $this->remove           = $item['remove'];
-        $this->subDirectory     = $item['subDirectory'];
-        $this->unit             = $item['unit'];
+        $this->connectionString = $item->get('connectionString', '');
+        $this->destination      = $item->get('destination', '');
+        $this->dir              = $item->get('dir', '');
+        $this->ext              = $item->get('ext', '');
+        $this->handler          = $item->get('handler', '');
+        $this->location         = $item->get('location', '');
+        $this->remove           = $item->get('remove', false);
+        $this->subDirectory     = $item->get('subDirectory', false);
+        $this->unit             = $item->get('unit', '');
     }
 
     /**
