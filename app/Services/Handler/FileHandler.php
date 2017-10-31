@@ -18,8 +18,6 @@ class FileHandler extends AbstractHandler
      */
     public function perform(Candidate $candidate, array $target): array
     {
-//        parent::perform($candidate, $target);
-
         if (empty($target)) {
             return $this->convertFileToByteArray($candidate);
         }
@@ -49,7 +47,7 @@ class FileHandler extends AbstractHandler
      * @param array $target
      * @return void
      */
-    private function convertByteArrayToFile(Candidate $candidate, array $target): void
+    public function convertByteArrayToFile(Candidate $candidate, array $target): void
     {
         $filePath = storage_path($candidate->getName());
         $content = pack('C*', ...$target);
