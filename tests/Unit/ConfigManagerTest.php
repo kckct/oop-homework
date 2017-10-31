@@ -24,18 +24,22 @@ class ConfigManagerTest extends TestCase
 
     public function test_有configs屬性()
     {
+        // assert
         $this->assertObjectHasAttribute('configs', $this->configManager);
     }
 
     public function test_讀取json檔有3筆config設定()
     {
+        // assert
         $this->assertEquals(3, $this->configManager->count());
     }
 
     public function test_可取得configs陣列且為Config物件且值正確()
     {
+        // act
         $configs = $this->configManager->getConfigs();
 
+        // assert
         // configs 屬性為 array
         $this->assertTrue(is_array($configs));
         // configs array 皆為 Config 物件
