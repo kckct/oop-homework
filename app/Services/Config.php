@@ -22,7 +22,7 @@ class Config
     /** @var string $ext */
     private $ext;
 
-    /** @var string $handler */
+    /** @var array $handler */
     private $handler;
 
     /** @var string $location */
@@ -47,7 +47,7 @@ class Config
         $this->destination      = $item->get('destination', '');
         $this->dir              = $item->get('dir', '');
         $this->ext              = $item->get('ext', '');
-        $this->handler          = $item->get('handler', '');
+        $this->handler          = $item->get('handler', []);
         $this->location         = $item->get('location', '');
         $this->remove           = $item->get('remove', false);
         $this->subDirectory     = $item->get('subDirectory', false);
@@ -87,9 +87,9 @@ class Config
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getHandler(): string
+    public function getHandler(): array
     {
         return $this->handler;
     }
