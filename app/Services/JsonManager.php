@@ -12,13 +12,13 @@ abstract class JsonManager
 {
     /**
      * 讀取 json 設定檔轉成 Collection Object
-     * @param string $configPath
+     * @param string $fileName
      * @return Collection
      */
-    protected function getJsonObject(string $configPath): Collection
+    protected function getJsonObject(string $fileName): Collection
     {
         // 讀取 json 設定檔
-        $fileContent = file_get_contents(app_path() . $configPath);
+        $fileContent = file_get_contents(config_path($fileName));
 
         // json decode
         return collect(json_decode($fileContent, true));

@@ -8,8 +8,8 @@ namespace App\Services;
  */
 class ConfigManager extends JsonManager
 {
-    /** @var string config.json 路徑 */
-    const CONFIG_PATH = '/../config/config.json';
+    /** @var string 設定檔檔名 */
+    const FILE_NAME = 'config.json';
 
     /** @var Config[] $configs */
     private $configs = [];
@@ -38,7 +38,7 @@ class ConfigManager extends JsonManager
     public function processJsonConfig()
     {
         // 讀取 json 轉成 Collection Object
-        $configObject = $this->getJsonObject(self::CONFIG_PATH);
+        $configObject = $this->getJsonObject(self::FILE_NAME);
 
         // 將 config.json 內容整理成 Config[] $configs
         $this->configs = collect($configObject->get('configs', []))->map(function($item) {
