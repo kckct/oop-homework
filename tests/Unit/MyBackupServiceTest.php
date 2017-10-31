@@ -23,18 +23,26 @@ class MyBackupServiceTest extends TestCase
         $this->myBackupService = new MyBackupService(new ConfigManager(), new ScheduleManager());
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     public function test_有managers屬性()
     {
+        // assert
         $this->assertObjectHasAttribute('managers', $this->myBackupService);
     }
 
     public function test_執行處理json設定檔後_managers屬性有值且型態正確()
     {
+        // act
         $this->myBackupService->processJsonConfigs();
 
         // 取得 managers 屬性，測試驗證用
         $managers = $this->myBackupService->getManagers();
 
+        // assert
         // managers 屬性為 array
         $this->assertTrue(is_array($managers));
         // $managers[0] 及 $managers[1] 為 JsonManager

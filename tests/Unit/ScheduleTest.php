@@ -16,6 +16,11 @@ class ScheduleTest extends TestCase
         parent::setUp();
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     public function test_傳入空陣列有預設屬性()
     {
         // arrange

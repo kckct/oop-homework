@@ -22,6 +22,11 @@ class ConfigManagerTest extends TestCase
         $this->configManager->processJsonConfig();
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     public function test_有configs屬性()
     {
         // assert

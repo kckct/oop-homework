@@ -22,6 +22,11 @@ class ScheduleManagerTest extends TestCase
         $this->scheduleManger->processJsonConfig();
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     public function test_有schedules屬性()
     {
         // assert
