@@ -10,13 +10,13 @@ use Illuminate\Support\Collection;
  */
 class Schedule
 {
-    /** @var string $ext */
+    /** @var string 排程所處理的檔案格式 */
     private $ext;
 
-    /** @var string $interval */
+    /** @var string 排程執行的間隔 */
     private $interval;
 
-    /** @var string $time */
+    /** @var string 排程所處理的時間 */
     private $time;
 
     /**
