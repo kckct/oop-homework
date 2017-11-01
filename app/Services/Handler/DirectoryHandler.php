@@ -3,6 +3,7 @@
 namespace App\Services\Handler;
 
 use App\Services\Candidate;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class DirectoryHandler
@@ -44,6 +45,13 @@ class DirectoryHandler extends AbstractHandler
      */
     private function copyToDirectory(Candidate $candidate, array $target): array
     {
+        // 還原檔案
+        $this->fileHandler->perform($candidate, $target);
 
+        // 檔名
+        $backupFileName = $candidate->getName() . '.backup';
+
+        // 將檔案移動到 config.json 內所設定的 dir 目錄
+        Storage::move($backupFileName, $candidate->getConfig()->getDir() . DIRECTORY_SEPARATOR . $backupFileName);
     }
 }
