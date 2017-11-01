@@ -29,7 +29,7 @@ class FileHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @expectedException InvalidArgumentException
      */
     public function test_將檔案轉成byte陣列_檔案不存在應丟exception()
     {
@@ -98,7 +98,7 @@ class FileHandlerTest extends TestCase
     {
         $configItem = collect([
             'ext'              => 'txt',
-            'location'         => 'c:\\xxx',
+            'location'         => 'D:\\Projects\\oop-homework\\storage\\app',
             'subDirectory'     => true,
             'unit'             => 'file',
             'remove'           => false,

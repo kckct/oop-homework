@@ -80,7 +80,7 @@ class DirectoryHandlerTest extends TestCase
     {
         $configItem = collect([
             'ext'              => 'txt',
-            'location'         => 'c:\\xxx',
+            'location'         => 'D:\\Projects\\oop-homework\\storage\\app',
             'subDirectory'     => true,
             'unit'             => 'file',
             'remove'           => false,
