@@ -16,11 +16,10 @@ class DirectoryHandler extends AbstractHandler
 
     /**
      * DirectoryHandler constructor.
-     * @param $fileHandler
      */
-    public function __construct(FileHandler $fileHandler)
+    public function __construct()
     {
-        $this->fileHandler = $fileHandler;
+        $this->fileHandler = new FileHandler();
     }
 
     /**
@@ -33,22 +32,24 @@ class DirectoryHandler extends AbstractHandler
     {
         parent::perform($candidate, $target);
 
-        // byte[] 有值時 直接回傳
-        if (!empty($target)) {
+        // byte[] 為空時 直接回傳
+        if (empty($target)) {
             return [];
         }
 
         // 將 byte[] 還原檔案並複製到其他目錄
-        return $this->copyToDirectory($candidate, $target);
+        $this->copyToDirectory($candidate, $target);
+
+        return $target;
     }
 
     /**
      * 還原檔案並複製到其他目錄
      * @param Candidate $candidate
      * @param array $target
-     * @return array
+     * @return void
      */
-    private function copyToDirectory(Candidate $candidate, array $target): array
+    private function copyToDirectory(Candidate $candidate, array $target): void
     {
         // 還原檔案
         $this->fileHandler->perform($candidate, $target);
@@ -56,7 +57,9 @@ class DirectoryHandler extends AbstractHandler
         // 檔名
         $backupFileName = $candidate->getName() . '.backup';
 
+        echo storage_path();
+
         // 將檔案移動到 config.json 內所設定的 dir 目錄
-        Storage::move($backupFileName, $candidate->getConfig()->getDir() . DIRECTORY_SEPARATOR . $backupFileName);
+        // Storage::move($backupFileName, $candidate->getConfig()->getDir() . DIRECTORY_SEPARATOR . $backupFileName);
     }
 }
