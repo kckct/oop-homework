@@ -4,6 +4,7 @@ namespace App\Services\Handler;
 
 use App\Services\Candidate;
 use Illuminate\Support\Facades\Storage;
+use InvalidArgumentException;
 
 /**
  * Class FileHandler
@@ -41,8 +42,18 @@ class FileHandler extends AbstractHandler
         // 檔名
         $fileName = $candidate->getName();
 
+        // 檔案路徑
+        $filePath = $candidate->getConfig()->getLocation() . DIRECTORY_SEPARATOR . $fileName;
+
+        // 若檔案不存在丟 exception
+        if (empty($fileName) || !file_exists($filePath)) {
+            throw new InvalidArgumentException("$filePath 檔案不存在");
+        }
+
         // 讀取檔案成 string
-        $content = Storage::get($fileName);
+        $handle = fopen($filePath, 'rb');
+        $content = fread($handle, filesize($filePath));
+        fclose($handle);
 
         // 以 char 為單位轉成 array
         return unpack('C*', $content);
