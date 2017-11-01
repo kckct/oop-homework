@@ -3,7 +3,6 @@
 namespace App\Services\Handler;
 
 use App\Services\Candidate;
-use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
 
 /**
