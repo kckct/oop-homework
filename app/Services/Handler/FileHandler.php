@@ -3,6 +3,7 @@
 namespace App\Services\Handler;
 
 use App\Services\Candidate;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class FileHandler
@@ -37,13 +38,11 @@ class FileHandler extends AbstractHandler
      */
     private function convertFileToByteArray(Candidate $candidate): array
     {
-        // 檔案路徑
-        $filePath = storage_path($candidate->getName());
+        // 檔名
+        $fileName = $candidate->getName();
 
         // 讀取檔案成 string
-        $handle = fopen($filePath, 'rb');
-        $content = fread($handle, filesize($filePath));
-        fclose($handle);
+        $content = Storage::get($fileName);
 
         // 以 char 為單位轉成 array
         return unpack('C*', $content);
@@ -57,16 +56,14 @@ class FileHandler extends AbstractHandler
      */
     private function convertByteArrayToFile(Candidate $candidate, array $target): void
     {
-        // 檔案路徑，跟原檔名相同，但副檔加上.backup
+        // 檔名，原檔名加上.backup
         // example: text.txt => text.txt.backup
-        $filePath = storage_path($candidate->getName() . '.backup');
+        $fileName = $candidate->getName() . '.backup';
 
         // 以 char 為單位將 array 轉回 string
         $content = pack('C*', ...$target);
 
         // 寫入檔案
-        $handle = fopen($filePath, 'w');
-        fwrite($handle, $content);
-        fclose($handle);
+        Storage::put($fileName, $content);
     }
 }

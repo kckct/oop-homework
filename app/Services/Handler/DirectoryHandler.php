@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class DirectoryHandler extends AbstractHandler
 {
+    /*** @var FileHandler */
     private $fileHandler;
 
     /**
