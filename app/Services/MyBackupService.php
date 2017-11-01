@@ -64,9 +64,10 @@ class MyBackupService
      * 找檔案
      * @return Candidate[]
      */
-    private function findFiles(): array
+    public function findFiles(): array
     {
         // TODO Homework 4
+        // 尚未實作先使用 public 方便測試 mock
     }
 
     /**
