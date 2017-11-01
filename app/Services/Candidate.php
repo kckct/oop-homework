@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Collection;
+
 /**
  * Class Candidate
  * @package App\Services
@@ -22,6 +24,19 @@ class Candidate
 
     /** @var string 檔案 size */
     private $size;
+
+    /**
+     * Candidate constructor.
+     * @param Collection $item
+     */
+    public function __construct(Collection $item)
+    {
+        $this->config       = $item->get('config', new Config(collect([])));
+        $this->fileDateTime = $item->get('fileDateTime', '');
+        $this->name         = $item->get('name', '');
+        $this->processName  = $item->get('processName', '');
+        $this->size         = $item->get('size', '');
+    }
 
     /**
      * @return Config
