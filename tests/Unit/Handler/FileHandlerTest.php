@@ -31,7 +31,7 @@ class FileHandlerTest extends TestCase
     /**
      * @expectedException Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function test_將檔案轉成byte陣列_檔案不存在丟exception()
+    public function test_將檔案轉成byte陣列_檔案不存在應丟exception()
     {
         // arrange
         $inputStub = collect([]);
@@ -49,27 +49,8 @@ class FileHandlerTest extends TestCase
         $testFileName = 'test.txt';
         Storage::put($testFileName, '123');
 
-        $configItem = collect([
-            'ext'              => 'txt',
-            'location'         => 'c:\\xxx',
-            'subDirectory'     => true,
-            'unit'             => 'file',
-            'remove'           => false,
-            'handler'          => ['zip', 'encode'],
-            'destination'      => 'directory',
-            'dir'              => 'D:\\Projects\\oop-homework\\storage\\backup',
-            'connectionString' => '',
-        ]);
-        $configStub = new Config($configItem);
-
-        $candidateItem = collect([
-            'config'       => $configStub,
-            'fileDateTime' => '2017-11-01 12:34:56',
-            'name'         => 'test.txt',
-            'processName'  => 'xxx',
-            'size'         => '123',
-        ]);
-        $candidateStub = new Candidate($candidateItem);
+        // 產生假 Candidate 物件
+        $candidateStub = $this->createFakeCandidate();
 
         $targetStub = [];
 
@@ -79,6 +60,8 @@ class FileHandlerTest extends TestCase
         // assert
         // byte array 筆數應該大於 0
         $this->assertTrue(count($byteArray) > 0);
+        // byte array 第一筆型態為 int
+        $this->assertTrue(is_numeric($byteArray[1]));
 
         // 測試結束刪除檔案
         Storage::delete($testFileName);
@@ -89,12 +72,28 @@ class FileHandlerTest extends TestCase
     /**
      * @depends test_將檔案轉成byte陣列_byte陣列筆數應大於0
      */
-    public function test_將byte陣列轉成檔案(array $byteArray)
+    public function test_將byte陣列轉成檔案_應有檔案產生(array $byteArray)
     {
         // arrange
         // 測試完預期產生的檔案
         $testFileName = 'test.txt.backup';
 
+        // 產生假 Candidate 物件
+        $candidateStub = $this->createFakeCandidate();
+
+        // act
+        $this->fileHandler->perform($candidateStub, $byteArray);
+
+        // assert
+        // 查看是否有檔案產生
+        $this->assertTrue(Storage::exists($testFileName));
+
+        // 測試結束刪除檔案
+        Storage::delete($testFileName);
+    }
+
+    private function createFakeCandidate()
+    {
         $configItem = collect([
             'ext'              => 'txt',
             'location'         => 'c:\\xxx',
@@ -115,16 +114,7 @@ class FileHandlerTest extends TestCase
             'processName'  => 'xxx',
             'size'         => '123',
         ]);
-        $candidateStub = new Candidate($candidateItem);
 
-        // act
-        $this->fileHandler->perform($candidateStub, $byteArray);
-
-        // assert
-        // 查看是否有檔案產生
-        $this->assertTrue(Storage::exists($testFileName));
-
-        // 測試結束刪除檔案
-        Storage::delete($testFileName);
+        return new Candidate($candidateItem);
     }
 }
