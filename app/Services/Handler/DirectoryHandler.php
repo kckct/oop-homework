@@ -4,6 +4,7 @@ namespace App\Services\Handler;
 
 use App\Services\Candidate;
 use Illuminate\Support\Facades\Storage;
+use InvalidArgumentException;
 
 /**
  * Class DirectoryHandler
@@ -57,9 +58,21 @@ class DirectoryHandler extends AbstractHandler
         // 檔名
         $backupFileName = $candidate->getName() . '.backup';
 
-        echo storage_path();
+        // config.json 內所設定的 dir 目錄
+        $newDir = $candidate->getConfig()->getDir();
 
-        // 將檔案移動到 config.json 內所設定的 dir 目錄
-        // Storage::move($backupFileName, $candidate->getConfig()->getDir() . DIRECTORY_SEPARATOR . $backupFileName);
+        // 若 dir 目錄不存在丟 exception
+        if (!file_exists($newDir)) {
+            throw new InvalidArgumentException("$newDir 目錄尚未設定");
+        }
+
+        // 原檔案路徑
+        $oldFilePath = storage_path('app' . DIRECTORY_SEPARATOR . $backupFileName);
+
+        // 複製後的檔案路徑
+        $newFilePath = $newDir . DIRECTORY_SEPARATOR . $backupFileName;
+
+        // 複製檔案
+        copy($oldFilePath, $newFilePath);
     }
 }

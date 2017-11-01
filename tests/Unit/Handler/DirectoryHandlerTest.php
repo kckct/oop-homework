@@ -31,6 +31,11 @@ class DirectoryHandlerTest extends TestCase
     public function test_將byte陣列還原成檔案並複製到其他目錄_傳入target有值_應回傳byte陣列且內容為string()
     {
         // arrange
+        // 測試執行時預期產生的檔案
+        $byteArrayToFile = 'test.txt.backup';
+        // 測試完預期產生的檔案
+        $copyToNewFile = 'backup/test.txt.backup';
+
         // 產生假 Candidate 物件
         $candidateStub = $this->createFakeCandidate();
 
@@ -41,14 +46,18 @@ class DirectoryHandlerTest extends TestCase
         ];
 
         // act
-        $byteArray = $this->directoryHandler->perform($candidateStub, $targetStub);
+        $this->directoryHandler->perform($candidateStub, $targetStub);
 
         // assert
-        // byte array 筆數應該大於 0
-        $this->assertTrue(count($byteArray) > 0);
-        // byte array 第一筆型態為 string
-        $this->assertTrue(is_string($byteArray[1]));
+        // 查看是否有檔案產生
+        $this->assertTrue(Storage::exists($byteArrayToFile));
+        $this->assertTrue(Storage::exists($copyToNewFile));
 
+        // 測試結束刪除檔案
+        Storage::delete($copyToNewFile);
+        $this->assertFalse(Storage::exists($copyToNewFile));
+        Storage::delete($byteArrayToFile);
+        $this->assertFalse(Storage::exists($byteArrayToFile));
     }
 
     public function test_將byte陣列還原成檔案並複製到其他目錄_傳入target為空陣列_應回傳空陣列()
@@ -77,7 +86,7 @@ class DirectoryHandlerTest extends TestCase
             'remove'           => false,
             'handler'          => ['zip', 'encode'],
             'destination'      => 'directory',
-            'dir'              => 'D:\\Projects\\oop-homework\\storage\\backup',
+            'dir'              => 'D:\\Projects\\oop-homework\\storage\\app\\backup',
             'connectionString' => '',
         ]);
         $configStub = new Config($configItem);
