@@ -18,10 +18,14 @@ class ZipHandler extends AbstractHandler
      */
     public function perform(Candidate $candidate, array $target): array
     {
+        parent::perform($candidate, $target);
+
+        // byte[] 為空時 直接回傳
         if (empty($target)) {
             return [];
         }
 
+        // 將 byte[] 壓縮
         return $this->zipData($candidate, $target);
     }
 

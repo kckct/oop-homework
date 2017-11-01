@@ -30,10 +30,14 @@ class DirectoryHandler extends AbstractHandler
      */
     public function perform(Candidate $candidate, array $target): array
     {
+        parent::perform($candidate, $target);
+
+        // byte[] 有值時 直接回傳
         if (!empty($target)) {
             return [];
         }
 
+        // 將 byte[] 還原檔案並複製到其他目錄
         return $this->copyToDirectory($candidate, $target);
     }
 
