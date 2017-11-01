@@ -65,6 +65,7 @@ class FileHandlerTest extends TestCase
 
         // 測試結束刪除檔案
         Storage::delete($testFileName);
+        $this->assertFalse(Storage::exists($testFileName));
 
         return $byteArray;
     }
@@ -90,6 +91,7 @@ class FileHandlerTest extends TestCase
 
         // 測試結束刪除檔案
         Storage::delete($testFileName);
+        $this->assertFalse(Storage::exists($testFileName));
     }
 
     private function createFakeCandidate()
