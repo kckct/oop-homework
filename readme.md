@@ -1,3 +1,5 @@
 ## OOP Training
 
-- Homework 1: Object
+- Homework 1
+- Homework 2
+- Homework 3
