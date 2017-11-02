@@ -3,7 +3,7 @@
 namespace App\Services\Handler;
 
 use App\Services\Candidate;
-use InvalidArgumentException;
+use League\Flysystem\FileNotFoundException;
 
 /**
  * Class DirectoryHandler
@@ -48,6 +48,7 @@ class DirectoryHandler extends AbstractHandler
      * @param Candidate $candidate
      * @param array $target
      * @return void
+     * @throws FileNotFoundException
      */
     private function copyToDirectory(Candidate $candidate, array $target): void
     {
@@ -62,7 +63,7 @@ class DirectoryHandler extends AbstractHandler
 
         // 若 dir 目錄不存在丟 exception
         if (!file_exists($newDir)) {
-            throw new InvalidArgumentException("$newDir 目錄尚未設定");
+            throw new FileNotFoundException("$newDir 目錄尚未設定");
         }
 
         // 原檔案路徑

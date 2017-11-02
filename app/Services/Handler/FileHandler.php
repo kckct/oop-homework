@@ -4,7 +4,7 @@ namespace App\Services\Handler;
 
 use App\Services\Candidate;
 use Illuminate\Support\Facades\Storage;
-use InvalidArgumentException;
+use League\Flysystem\FileNotFoundException;
 
 /**
  * Class FileHandler
@@ -36,6 +36,7 @@ class FileHandler extends AbstractHandler
      * 將檔案轉成 byte array
      * @param Candidate $candidate
      * @return array
+     * @throws FileNotFoundException
      */
     private function convertFileToByteArray(Candidate $candidate): array
     {
@@ -47,7 +48,7 @@ class FileHandler extends AbstractHandler
 
         // 若檔案不存在丟 exception
         if (empty($fileName) || !file_exists($filePath)) {
-            throw new InvalidArgumentException("$filePath 檔案不存在");
+            throw new FileNotFoundException("$filePath 檔案不存在");
         }
 
         // 讀取檔案成 string

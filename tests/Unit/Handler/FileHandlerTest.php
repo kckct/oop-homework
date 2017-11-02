@@ -29,7 +29,7 @@ class FileHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException League\Flysystem\FileNotFoundException
      */
     public function test_將檔案轉成byte陣列_檔案不存在應丟exception()
     {
