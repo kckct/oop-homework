@@ -6,7 +6,7 @@
       "subDirectory": true,
       "unit": "file",
       "remove": false,
-      "handler": "zip",
+      "handler": ["zip", "encode"],
       "destination": "directory",
       "dir": "c:\\MyArchieves",
       "connectionString": ""
@@ -17,7 +17,7 @@
       "subDirectory": true,
       "unit": "file",
       "remove": false,
-      "handler": "encode",
+      "handler": ["encode"],
       "destination": "db",
       "dir": "",
       "connectionString": "MyConnectionString"
@@ -28,7 +28,7 @@
       "subDirectory": true,
       "unit": "file",
       "remove": false,
-      "handler": "",
+      "handler": [],
       "destination": "directory",
       "dir": "c:\\MyArchieves",
       "connectionString": ""

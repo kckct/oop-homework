@@ -10,31 +10,31 @@ use Illuminate\Support\Collection;
  */
 class Config
 {
-    /** @var string $connectionString */
+    /** @var string 資料庫連接字串 */
     private $connectionString;
 
-    /** @var string $destination */
+    /** @var string 儲存目的地 */
     private $destination;
 
-    /** @var string $dir */
+    /** @var string 處理後的目錄 */
     private $dir;
 
-    /** @var string $ext */
+    /** @var string 檔案格式 */
     private $ext;
 
-    /** @var string $handler */
+    /** @var array 處理方式 */
     private $handler;
 
-    /** @var string $location */
+    /** @var string 備份檔案的目錄 */
     private $location;
 
-    /** @var bool $remove */
+    /** @var bool 處理完是否刪除檔案 */
     private $remove;
 
-    /** @var bool $subDirectory */
+    /** @var bool 是否處理子目錄 */
     private $subDirectory;
 
-    /** @var string $unit */
+    /** @var string 備份單位 */
     private $unit;
 
     /**
@@ -47,7 +47,7 @@ class Config
         $this->destination      = $item->get('destination', '');
         $this->dir              = $item->get('dir', '');
         $this->ext              = $item->get('ext', '');
-        $this->handler          = $item->get('handler', '');
+        $this->handler          = $item->get('handler', []);
         $this->location         = $item->get('location', '');
         $this->remove           = $item->get('remove', false);
         $this->subDirectory     = $item->get('subDirectory', false);
@@ -87,9 +87,9 @@ class Config
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getHandler(): string
+    public function getHandler(): array
     {
         return $this->handler;
     }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class JsonManager
@@ -12,13 +13,13 @@ abstract class JsonManager
 {
     /**
      * 讀取 json 設定檔轉成 Collection Object
-     * @param string $configPath
+     * @param string $fileName
      * @return Collection
      */
-    protected function getJsonObject(string $configPath): Collection
+    protected function getJsonObject(string $fileName): Collection
     {
         // 讀取 json 設定檔
-        $fileContent = file_get_contents(app_path() . $configPath);
+        $fileContent = Storage::disk('config')->get($fileName);
 
         // json decode
         return collect(json_decode($fileContent, true));

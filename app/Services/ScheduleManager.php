@@ -8,8 +8,8 @@ namespace App\Services;
  */
 class ScheduleManager extends JsonManager
 {
-    /** @var string schedule.json 路徑 */
-    const CONFIG_PATH = '/../config/schedule.json';
+    /** @var string 設定檔檔名 */
+    const FILE_NAME = 'schedule.json';
 
     /** @var Schedule[] $schedules */
     private $schedules = [];
@@ -38,7 +38,7 @@ class ScheduleManager extends JsonManager
     public function processJsonConfig()
     {
         // 讀取 json 轉成 Collection Object
-        $scheduleArray = $this->getJsonObject(self::CONFIG_PATH);
+        $scheduleArray = $this->getJsonObject(self::FILE_NAME);
 
         // 將 schedule.json 內容整理成 Schedule[] $schedules
         $this->schedules = collect($scheduleArray->get('schedules', []))->map(function($item) {
