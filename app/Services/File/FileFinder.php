@@ -3,13 +3,13 @@
 namespace App\Services\File;
 
 use ArrayAccess;
-use IteratorAggregate;
+use Iterator;
 
 /**
  * Interface FileFinder
  * @package App\Services\File
  */
-interface FileFinder extends IteratorAggregate, ArrayAccess
+interface FileFinder extends Iterator, ArrayAccess
 {
     
 }

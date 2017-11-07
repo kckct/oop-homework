@@ -4,7 +4,6 @@ namespace App\Services\File;
 
 use App\Services\Candidate;
 use App\Services\Config;
-use ArrayIterator;
 
 /**
  * Class AbstractFileFinder
@@ -15,8 +14,11 @@ abstract class AbstractFileFinder implements FileFinder
     /*** @var Config */
     protected $config;
 
-    /*** @var array */
+    /*** @var string[] */
     protected $files;
+
+    /*** @var int array index */
+    protected $index = 0;
 
     /**
      * AbstractFileFinder constructor.
@@ -28,26 +30,29 @@ abstract class AbstractFileFinder implements FileFinder
     }
 
     /**
+     * ArrayAccess 實作
      * @author Paul.Tseng
      * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->files[$offset]);
     }
 
     /**
+     * ArrayAccess 實作
      * @author Paul.Tseng
      * @param mixed $offset
      * @return mixed|null
      */
     public function offsetGet($offset)
     {
-        return isset($this->files[$offset]) ? $this->files[$offset] : null;
+        return isset($this->files[$offset]) ? $this->createCandidate($this->files[$offset]) : null;
     }
 
     /**
+     * ArrayAccess 實作
      * @author Paul.Tseng
      * @param mixed $offset
      * @param mixed $value
@@ -62,6 +67,7 @@ abstract class AbstractFileFinder implements FileFinder
     }
 
     /**
+     * ArrayAccess 實作
      * @author Paul.Tseng
      * @param mixed $offset
      */
@@ -71,15 +77,50 @@ abstract class AbstractFileFinder implements FileFinder
     }
 
     /**
-     * @author Paul.Tseng
-     * @return ArrayIterator
+     * Iterator 實作
+     * @return Candidate
      */
-    public function getIterator(): ArrayIterator
+    public function current(): Candidate
     {
-        return new ArrayIterator($this->files);
+        return $this->createCandidate($this->files[$this->index]);
     }
 
     /**
+     * Iterator 實作
+     */
+    public function next(): void
+    {
+        ++$this->index;
+    }
+
+    /**
+     * Iterator 實作
+     * @return int
+     */
+    public function key(): int
+    {
+        return $this->index;
+    }
+
+    /**
+     * Iterator 實作
+     * @return bool
+     */
+    public function valid(): bool
+    {
+        return isset($this->files[$this->index]);
+    }
+
+    /**
+     * Iterator 實作
+     */
+    public function rewind(): void
+    {
+        $this->index = 0;
+    }
+
+    /**
+     * 產生 Candidate object
      * @author Paul.Tseng
      * @param string $fileName
      * @return Candidate
