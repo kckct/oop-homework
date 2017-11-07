@@ -51,23 +51,15 @@ class MyBackupService
      */
     public function doBackup(): void
     {
-        // 找檔案
-        $candidates = $this->findFiles();
+        collect($this->managers[0]->getConfigs())->each(function (Config $config) {
+            // 建立 file 的 FileFinder
+            $fileFinder = FileFinderFactory::create('file', $config);
 
-        // 找到檔案的所有 handlers 後進行處理
-        collect($candidates)->each(function (Candidate $candidate) {
-            $this->broadcastToHandlers($candidate);
+            // 以 FileFinder 找到檔案的所有 handlers 後進行處理
+            collect($fileFinder)->each(function (Candidate $candidate) {
+                $this->broadcastToHandlers($candidate);
+            });
         });
-    }
-
-    /**
-     * 找檔案
-     * @return Candidate[]
-     */
-    public function findFiles(): array
-    {
-        // TODO Homework 4
-        // 尚未實作先使用 public 方便測試 mock
     }
 
     /**
