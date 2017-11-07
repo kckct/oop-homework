@@ -120,6 +120,15 @@ abstract class AbstractFileFinder implements FileFinder
     }
 
     /**
+     * Countable 實作
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->files);
+    }
+
+    /**
      * 產生 Candidate object
      * @author Paul.Tseng
      * @param string $fileName
