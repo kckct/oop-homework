@@ -3,6 +3,7 @@
 namespace App\Services\Handler;
 
 use App\Services\Candidate;
+use Illuminate\Support\Facades\File;
 use League\Flysystem\FileNotFoundException;
 
 /**
@@ -73,6 +74,6 @@ class DirectoryHandler extends AbstractHandler
         $newFilePath = $newDir . DIRECTORY_SEPARATOR . $backupFileName;
 
         // 複製檔案
-        copy($oldFilePath, $newFilePath);
+        File::copy($oldFilePath, $newFilePath);
     }
 }

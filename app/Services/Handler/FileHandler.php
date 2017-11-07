@@ -4,6 +4,7 @@ namespace App\Services\Handler;
 
 use App\Services\Candidate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use League\Flysystem\FileNotFoundException;
 
 /**
@@ -52,9 +53,7 @@ class FileHandler extends AbstractHandler
         }
 
         // 讀取檔案成 string
-        $handle = fopen($filePath, 'rb');
-        $content = fread($handle, filesize($filePath));
-        fclose($handle);
+        $content = File::get($filePath);
 
         // 以 char 為單位轉成 array
         return unpack('C*', $content);
