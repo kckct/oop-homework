@@ -23,25 +23,15 @@ class LocalFileFinder extends AbstractFileFinder
 
         // 是否處理子目錄
         if ($config->isSubDirectory()) {
-            $this->files = $this->getSubDirectoryFiles($config);
+            // 取得所有子目錄所有的檔名
+            $files = File::allFiles($config->getLocation());
         } else {
+            // 取得此目錄所有的檔名
             $files = File::files($config->getLocation());
-            $this->files = $this->filterFileExtension($files, $config);
         }
-    }
-
-    /**
-     * 取得所有子目錄且副檔名符合的檔名
-     * @param Config $config
-     * @return array
-     */
-    private function getSubDirectoryFiles(Config $config): array
-    {
-        // 取得所有子目錄的檔名
-        $files = File::allFiles($config->getLocation());
 
         // 過濾副檔名
-        return $this->filterFileExtension($files, $config);
+        $this->files = $this->filterFileExtension($files, $config);
     }
 
     /**
