@@ -52,14 +52,14 @@ class ConfigManagerTest extends TestCase
         $this->assertInstanceOf(Config::class, $configs[1]);
         $this->assertInstanceOf(Config::class, $configs[2]);
         // configs[0] 所有 property 值正確
-        $this->assertEquals('cs', $configs[0]->getExt());
-        $this->assertEquals('c:\\Projects', $configs[0]->getLocation());
-        $this->assertTrue($configs[0]->isSubDirectory());
+        $this->assertEquals('txt', $configs[0]->getExt());
+        $this->assertEquals('D:\\Projects\\oop-homework\\storage\\app', $configs[0]->getLocation());
+        $this->assertFalse($configs[0]->isSubDirectory());
         $this->assertEquals('file', $configs[0]->getUnit());
         $this->assertFalse($configs[0]->isRemove());
         $this->assertEquals(['zip', 'encode'], $configs[0]->getHandler());
         $this->assertEquals('directory', $configs[0]->getDestination());
-        $this->assertEquals('c:\\MyArchieves', $configs[0]->getDir());
+        $this->assertEquals('D:\\Projects\\oop-homework\\storage\\app\\backup', $configs[0]->getDir());
         $this->assertEquals('', $configs[0]->getConnectionString());
     }
 }

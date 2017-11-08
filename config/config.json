@@ -1,19 +1,19 @@
 {
   "configs": [
     {
-      "ext": "cs",
-      "location": "c:\\Projects",
-      "subDirectory": true,
+      "ext": "txt",
+      "location": "D:\\Projects\\oop-homework\\storage\\app",
+      "subDirectory": false,
       "unit": "file",
       "remove": false,
       "handler": ["zip", "encode"],
       "destination": "directory",
-      "dir": "c:\\MyArchieves",
+      "dir": "D:\\Projects\\oop-homework\\storage\\app\\backup",
       "connectionString": ""
     },
     {
       "ext": "DOCX",
-      "location": "c:\\Documents",
+      "location": "D:\\Projects\\oop-homework\\storage\\app",
       "subDirectory": true,
       "unit": "file",
       "remove": false,
@@ -24,13 +24,13 @@
     },
     {
       "ext": "jpg",
-      "location": "c:\\Pictures",
+      "location": "D:\\Projects\\oop-homework\\storage\\app",
       "subDirectory": true,
       "unit": "file",
       "remove": false,
       "handler": [],
       "destination": "directory",
-      "dir": "c:\\MyArchieves",
+      "dir": "D:\\Projects\\oop-homework\\storage\\app\\backup",
       "connectionString": ""
     }
   ]

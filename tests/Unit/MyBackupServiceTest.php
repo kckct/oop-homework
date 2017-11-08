@@ -2,10 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Services\Candidate;
-use App\Services\Config;
 use Illuminate\Support\Facades\Storage;
-use Mockery as M;
 use Tests\TestCase;
 use App\Services\MyBackupService;
 use App\Services\JsonManager;
@@ -69,13 +66,9 @@ class MyBackupServiceTest extends TestCase
         // 測試完預期產生的檔案
         $copyToNewFile = 'backup/test.txt.backup';
 
-        // 產生假 Candidate 物件
-        $candidateStub = $this->createFakeCandidate();
-
         // act
-        $myBackupService = M::mock(MyBackupService::class)->makePartial();
-        $myBackupService->shouldReceive('findFiles')->once()->andReturn([$candidateStub]);
-        $myBackupService->doBackup();
+        $this->myBackupService->processJsonConfigs();
+        $this->myBackupService->doBackup();
 
         // assert
         // 查看是否有檔案產生
@@ -90,31 +83,5 @@ class MyBackupServiceTest extends TestCase
         $this->assertFalse(Storage::exists($copyToNewFile));
         Storage::delete($byteArrayToFile);
         $this->assertFalse(Storage::exists($byteArrayToFile));
-    }
-
-    private function createFakeCandidate()
-    {
-        $configItem = collect([
-            'ext'              => 'txt',
-            'location'         => 'D:\\Projects\\oop-homework\\storage\\app',
-            'subDirectory'     => true,
-            'unit'             => 'file',
-            'remove'           => false,
-            'handler'          => ['encode', 'zip'],
-            'destination'      => 'directory',
-            'dir'              => 'D:\\Projects\\oop-homework\\storage\\app\\backup',
-            'connectionString' => '',
-        ]);
-        $configStub = new Config($configItem);
-
-        $candidateItem = collect([
-            'config'       => $configStub,
-            'fileDateTime' => '2017-11-01 12:34:56',
-            'name'         => 'test.txt',
-            'processName'  => 'xxx',
-            'size'         => '123',
-        ]);
-
-        return new Candidate($candidateItem);
     }
 }
