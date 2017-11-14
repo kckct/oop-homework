@@ -38,8 +38,6 @@ class MyBackupServiceTest extends TestCase
     public function test_執行處理json設定檔後_managers屬性有值且型態正確()
     {
         // act
-        $this->myBackupService->processJsonConfigs();
-
         // 取得 managers 屬性，測試驗證用
         $managers = $this->myBackupService->getManagers();
 
@@ -67,8 +65,7 @@ class MyBackupServiceTest extends TestCase
         $copyToNewFile = 'backup/test.txt.backup';
 
         // act
-        $this->myBackupService->processJsonConfigs();
-        $this->myBackupService->doBackup();
+        $this->myBackupService->simpleBackup();
 
         // assert
         // 查看是否有檔案產生
