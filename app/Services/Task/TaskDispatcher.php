@@ -3,9 +3,8 @@
 namespace App\Services\Task;
 
 use App\Services\Config;
-use App\Services\ConfigManager;
-use App\Services\JsonManager;
 use App\Services\Schedule;
+use App\Services\JsonManager;
 
 /**
  * Class TaskDispatcher
