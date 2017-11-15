@@ -13,20 +13,8 @@ use Carbon\Carbon;
  */
 class ScheduledTask extends AbstractTask
 {
-    /**
-     * Names of days of the week.
-     *
-     * @var array
-     */
-    const DAY_NAME_MAPPING = [
-        'SUNDAY' => 0,
-        'MONDAY' => 'Monday',
-        'TUESDAY' => 'Tuesday',
-        'WEDNESDAY' => 'Wednesday',
-        'THURSDAY' => 'Thursday',
-        'FRIDAY' => 'Friday',
-        'SATURDAY' => 'Saturday',
-    ];
+    /** @var string 每天 */
+    const INTERVAL_EVERYDAY = 'EVERYDAY';
 
     /**
      * 執行排程備份
@@ -38,17 +26,25 @@ class ScheduledTask extends AbstractTask
     {
         parent::execute($config, $schedule);
 
-        // 檢查 Schedule 內設定的時間是否符合
+        // 取 Schedule 內設定的時間 interval
         $scheduleInterval = strtoupper($schedule->getInterval());
+
+        // 取 今天 interval
         $dayName = strtoupper(date('l'));
 
-        if ($scheduleInterval !== 'EVERYDAY' && ($scheduleInterval !== $dayName)) {
+        // 1. interval 設定為 Everyday 的不檢查
+        // 2. interval 設定與現在不同則中斷
+        if ($scheduleInterval !== self::INTERVAL_EVERYDAY && ($scheduleInterval !== $dayName)) {
             return;
         }
 
+        // 取 Schedule 內設定的時間 time 並切為時與分
         $scheduleTime = explode(':', $schedule->getTime());
+
+        // 取 今天 time
         $now = Carbon::now();
 
+        // hour & minute 設定與現在不同則中斷
         if ($now->hour !== (int)$scheduleTime[0] || $now->minute !== (int)$scheduleTime[1]) {
             return;
         }
