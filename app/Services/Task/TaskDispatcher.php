@@ -44,5 +44,20 @@ class TaskDispatcher
     {
         // 建立排程備份工作的物件
         $this->task = TaskFactory::create('scheduled');
+
+        /** @var Schedule[] $schedules */
+        $schedules = $managers[1]->getSchedules();
+
+        /** @var Config[] $configs */
+        $configs   = $managers[0]->getConfigs();
+
+        // Schedule 設定要處理的檔案類型必須在 Config 內也有設定才執行備份
+        foreach ($schedules as $schedule) {
+            foreach ($configs as $config) {
+                if ($schedule->getExt() === $config->getExt()) {
+                    $this->task->execute($config, $schedule);
+                }
+            }
+        }
     }
 }

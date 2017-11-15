@@ -75,6 +75,9 @@ class MyBackupService
      */
     public function scheduledBackup(): void
     {
-        $this->taskDispatcher->scheduledTask($this->managers);
+        // print_r($this->managers);exit;
+        // while (true) {
+            $this->taskDispatcher->scheduledTask($this->managers);
+        // }
     }
 }
