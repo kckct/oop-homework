@@ -75,9 +75,13 @@ class MyBackupService
      */
     public function scheduledBackup(): void
     {
-        // print_r($this->managers);exit;
-        // while (true) {
+        while (true) {
             $this->taskDispatcher->scheduledTask($this->managers);
-        // }
+
+            // phpunit 只跑一次
+            if (env('APP_ENV') === 'testing') {
+                break;
+            }
+        }
     }
 }
