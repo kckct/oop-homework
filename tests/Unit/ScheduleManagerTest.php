@@ -52,7 +52,7 @@ class ScheduleManagerTest extends TestCase
         $this->assertInstanceOf(Schedule::class, $schedules[1]);
         $this->assertInstanceOf(Schedule::class, $schedules[2]);
         // schedules[0] 所有 property 值正確
-        $this->assertEquals('cs', $schedules[0]->getExt());
+        $this->assertEquals('txt', $schedules[0]->getExt());
         $this->assertEquals('Everyday', $schedules[0]->getInterval());
         $this->assertEquals('12:00', $schedules[0]->getTime());
     }
