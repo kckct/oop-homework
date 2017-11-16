@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Task;
 
 use App\Services\Task\ScheduledTask;
 use App\Services\Task\SimpleTask;
@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 /**
  * Class TaskFactoryTest
- * @package Tests\Unit
+ * @package Tests\Unit\Task
  */
 class TaskFactoryTest extends TestCase
 {

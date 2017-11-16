@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Handler;
+namespace Tests\Unit\Task;
 
 use Illuminate\Support\Facades\Storage;
 use App\Services\Task\ScheduledTask;
@@ -9,8 +9,8 @@ use App\Services\Config;
 use Tests\TestCase;
 
 /**
- * Class SimpleTaskTest
- * @package Tests\Unit\Handler
+ * Class ScheduledTaskTest
+ * @package Tests\Unit\Task
  */
 class ScheduledTaskTest extends TestCase
 {
