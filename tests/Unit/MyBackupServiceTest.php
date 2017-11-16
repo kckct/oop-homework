@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 use App\Services\MyBackupService;
 use App\Services\JsonManager;
@@ -38,8 +39,6 @@ class MyBackupServiceTest extends TestCase
     public function test_執行處理json設定檔後_managers屬性有值且型態正確()
     {
         // act
-        $this->myBackupService->processJsonConfigs();
-
         // 取得 managers 屬性，測試驗證用
         $managers = $this->myBackupService->getManagers();
 
@@ -55,7 +54,7 @@ class MyBackupServiceTest extends TestCase
         $this->assertInstanceOf(ScheduleManager::class, $managers[1]);
     }
 
-    public function test_執行備份doBackup會執行四個Handler_應會產生三個檔案()
+    public function test_執行備份simpleBackup會執行四個Handler_應會產生三個檔案()
     {
         // arrange
         // 產生測試用檔案
@@ -67,8 +66,7 @@ class MyBackupServiceTest extends TestCase
         $copyToNewFile = 'backup/test.txt.backup';
 
         // act
-        $this->myBackupService->processJsonConfigs();
-        $this->myBackupService->doBackup();
+        $this->myBackupService->simpleBackup();
 
         // assert
         // 查看是否有檔案產生
@@ -83,5 +81,101 @@ class MyBackupServiceTest extends TestCase
         $this->assertFalse(Storage::exists($copyToNewFile));
         Storage::delete($byteArrayToFile);
         $this->assertFalse(Storage::exists($byteArrayToFile));
+    }
+
+    public function test_執行備份scheduledBackup_Everyday且現在時間_會執行四個Handler_應會產生四個檔案()
+    {
+        // arrange
+        // 產生測試用檔案
+        $testJsonFile = 'D:\\Projects\\oop-homework\\config\\test-schedule.json';
+        $content = '
+            {
+                "schedules": [
+                    {
+                        "ext": "txt",
+                        "time": "' . date('H:i') . '",
+                        "interval": "Everyday"
+                    }
+                ]
+            }
+        ';
+        File::put($testJsonFile, $content);
+        $testFileName = 'test.txt';
+        Storage::put($testFileName, '123');
+        // 測試執行時預期產生的檔案
+        $byteArrayToFile = 'test.txt.backup';
+        // 測試完預期產生的檔案
+        $copyToNewFile = 'backup/test.txt.backup';
+
+        // act
+        // 蓋掉 ScheduleManager const FILE_NAME，改用測試用 json
+        $scheduleManagerStub = new class extends ScheduleManager {
+            const FILE_NAME = 'test-schedule.json';
+        };
+        $myBackupService = new MyBackupService(new ConfigManager(), $scheduleManagerStub);
+        $myBackupService->scheduledBackup();
+
+        // assert
+        // 查看是否有檔案產生
+        $this->assertTrue(File::exists($testJsonFile));
+        $this->assertTrue(Storage::exists($testFileName));
+        $this->assertTrue(Storage::exists($byteArrayToFile));
+        $this->assertTrue(Storage::exists($copyToNewFile));
+
+        // 測試結束刪除檔案
+        File::delete($testJsonFile);
+        $this->assertFalse(File::exists($testJsonFile));
+        Storage::delete($testFileName);
+        $this->assertFalse(Storage::exists($testFileName));
+        Storage::delete($copyToNewFile);
+        $this->assertFalse(Storage::exists($copyToNewFile));
+        Storage::delete($byteArrayToFile);
+        $this->assertFalse(Storage::exists($byteArrayToFile));
+    }
+
+    public function test_執行備份scheduledBackup_Monday且現在時間加1小時_不會執行Handler_應會產生兩個檔案()
+    {
+        // arrange
+        // 產生測試用檔案
+        $testJsonFile = 'D:\\Projects\\oop-homework\\config\\test-schedule.json';
+        $content = '
+            {
+                "schedules": [
+                    {
+                        "ext": "txt",
+                        "time": "' . date('H:i', strtotime('+1 hour')) . '",
+                        "interval": "Monday"
+                    }
+                ]
+            }
+        ';
+        File::put($testJsonFile, $content);
+        $testFileName = 'test.txt';
+        Storage::put($testFileName, '123');
+        // 測試執行時預期產生的檔案
+        $byteArrayToFile = 'test.txt.backup';
+        // 測試完預期產生的檔案
+        $copyToNewFile = 'backup/test.txt.backup';
+
+        // act
+        // 蓋掉 ScheduleManager const FILE_NAME，改用測試用 json
+        $scheduleManagerStub = new class extends ScheduleManager {
+            const FILE_NAME = 'test-schedule.json';
+        };
+        $myBackupService = new MyBackupService(new ConfigManager(), $scheduleManagerStub);
+        $myBackupService->scheduledBackup();
+
+        // assert
+        // 查看是否有檔案產生
+        $this->assertTrue(File::exists($testJsonFile));
+        $this->assertTrue(Storage::exists($testFileName));
+        $this->assertFalse(Storage::exists($byteArrayToFile));
+        $this->assertFalse(Storage::exists($copyToNewFile));
+
+        // 測試結束刪除檔案
+        File::delete($testJsonFile);
+        $this->assertFalse(File::exists($testJsonFile));
+        Storage::delete($testFileName);
+        $this->assertFalse(Storage::exists($testFileName));
     }
 }

@@ -1,0 +1,56 @@
+@startuml
+
+class Candidate {
+    -config
+    -fileDateTime
+    -name
+    -processName
+    -size
+}
+
+class MyBackupService {
+    -managers
+    -taskDispatcher
+    +simpleBackup()
+    +scheduledBackup()
+}
+
+class TaskDispatcher {
+    -task
+    +simpleTask()
+    +scheduledTask()
+}
+
+class TaskFactory {
+    {static} +create()
+}
+
+interface Task {
+    +execute()
+}
+
+abstract class AbstractTask {
+    +execute()
+    #broadcastToHandlers()
+    #findHandlers()
+}
+
+class SimpleTask {
+    +execute()
+}
+
+class ScheduledTask {
+    +execute()
+}
+
+MyBackupService *-> TaskDispatcher
+TaskDispatcher .> TaskFactory
+TaskDispatcher o.> Task
+TaskFactory .> Task
+TaskFactory *-> SimpleTask
+TaskFactory *-> ScheduledTask
+Task <|.. AbstractTask
+AbstractTask <|-- SimpleTask
+AbstractTask <|-- ScheduledTask
+
+@enduml

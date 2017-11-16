@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\File;
 
-use App\Services\File\FileFinder;
-use App\Services\File\LocalFileFinder;
+use App\Services\Config;
 use InvalidArgumentException;
 
 /**

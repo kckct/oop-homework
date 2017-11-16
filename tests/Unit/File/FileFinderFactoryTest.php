@@ -5,7 +5,7 @@ namespace Tests\Unit\File;
 use App\Services\Candidate;
 use App\Services\Config;
 use App\Services\File\FileFinder;
-use App\Services\FileFinderFactory;
+use App\Services\File\FileFinderFactory;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 

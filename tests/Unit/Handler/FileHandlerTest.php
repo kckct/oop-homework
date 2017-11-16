@@ -6,6 +6,7 @@ use App\Services\Candidate;
 use App\Services\Config;
 use App\Services\Handler\FileHandler;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FileNotFoundException;
 use Tests\TestCase;
 
 /**
@@ -28,11 +29,10 @@ class FileHandlerTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * @expectedException League\Flysystem\FileNotFoundException
-     */
     public function test_將檔案轉成byte陣列_檔案不存在應丟exception()
     {
+        $this->expectException(FileNotFoundException::class);
+
         // arrange
         $inputStub = collect([]);
         $candidateStub = new Candidate($inputStub);

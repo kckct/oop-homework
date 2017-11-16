@@ -1,7 +1,7 @@
 {
   "schedules": [
     {
-      "ext": "cs",
+      "ext": "txt",
       "time": "12:00",
       "interval": "Everyday"
     },
