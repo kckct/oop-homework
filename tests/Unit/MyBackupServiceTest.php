@@ -93,7 +93,7 @@ class MyBackupServiceTest extends TestCase
                 "schedules": [
                     {
                         "ext": "txt",
-                        "time": "' . date('H') . ':' . date('i') . '",
+                        "time": "' . date('H:i') . '",
                         "interval": "Everyday"
                     }
                 ]
@@ -143,7 +143,7 @@ class MyBackupServiceTest extends TestCase
                 "schedules": [
                     {
                         "ext": "txt",
-                        "time": "' . (date('H') + 1) . ':' . date('i') . '",
+                        "time": "' . date('H:i', strtotime('+1 hour')) . '",
                         "interval": "Monday"
                     }
                 ]
