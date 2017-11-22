@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MyBackup
+ * Class MyLog
  * @package App\Models
  */
-class MyBackup extends Model
+class MyLog extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'my_backup';
+    protected $table = 'my_log';
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +23,6 @@ class MyBackup extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'fileDateTime', 'size', 'target',
+        'name', 'config',
     ];
 }
