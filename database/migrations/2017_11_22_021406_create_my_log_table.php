@@ -16,7 +16,15 @@ class CreateMyLogTable extends Migration
         Schema::create('my_log', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('config');
+            $table->string('connectionString');
+            $table->string('destination');
+            $table->string('dir');
+            $table->string('ext');
+            $table->string('handler');
+            $table->string('location');
+            $table->boolean('remove');
+            $table->boolean('subDirectory');
+            $table->string('unit');
             $table->timestamps();
         });
     }
