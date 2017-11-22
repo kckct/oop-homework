@@ -2,7 +2,9 @@
 
 namespace App\Services\Handler;
 
+use App\Models\MyBackup;
 use App\Services\Candidate;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class DBBackupHandler
@@ -19,6 +21,13 @@ class DBBackupHandler extends AbstractDBHandler
     public function perform(Candidate $candidate, array $target): array
     {
         parent::perform($candidate, $target);
+
+        MyBackup::create([
+            'name'           => File::basename($candidate->getName()),
+            'file_date_time' => $candidate->getFileDateTime(),
+            'size'           => $candidate->getSize(),
+            'target'         => json_encode($target),
+        ]);
 
         return $target;
     }
