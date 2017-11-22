@@ -16,7 +16,7 @@ class CreateMyBackupTable extends Migration
         Schema::create('my_backup', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->dateTime('file_date_time');
+            $table->dateTime('fileDateTime');
             $table->integer('size');
             $table->text('target');
             $table->timestamps();
