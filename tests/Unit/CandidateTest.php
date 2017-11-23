@@ -59,7 +59,7 @@ class CandidateTest extends TestCase
         $inputStub = collect([
             'config'       => $configStub,
             'fileDateTime' => '2017-11-01 12:34:56',
-            'name'         => 'test.txt',
+            'name'         => 'D:\\Projects\\oop-homework\\storage\\app\\test.txt',
             'processName'  => 'xxx',
             'size'         => '123',
         ]);
@@ -71,7 +71,7 @@ class CandidateTest extends TestCase
         // 屬性值是否正確
         $this->assertEquals('php', $candidate->getConfig()->getExt());
         $this->assertEquals('2017-11-01 12:34:56', $candidate->getFileDateTime());
-        $this->assertEquals('test.txt', $candidate->getName());
+        $this->assertEquals('D:\\Projects\\oop-homework\\storage\\app\\test.txt', $candidate->getName());
         $this->assertEquals('xxx', $candidate->getProcessName());
         $this->assertEquals('123', $candidate->getSize());
         // Candidate 的屬性 config 型別應為 Config

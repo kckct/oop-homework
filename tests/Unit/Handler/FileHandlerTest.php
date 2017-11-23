@@ -112,7 +112,7 @@ class FileHandlerTest extends TestCase
         $candidateItem = collect([
             'config'       => $configStub,
             'fileDateTime' => '2017-11-01 12:34:56',
-            'name'         => 'test.txt',
+            'name'         => 'D:\\Projects\\oop-homework\\storage\\app\\test.txt',
             'processName'  => 'xxx',
             'size'         => '123',
         ]);

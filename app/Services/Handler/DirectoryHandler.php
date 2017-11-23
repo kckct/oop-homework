@@ -57,7 +57,7 @@ class DirectoryHandler extends AbstractHandler
         $this->fileHandler->perform($candidate, $target);
 
         // 檔名
-        $backupFileName = $candidate->getName() . '.backup';
+        $backupFileName = File::basename($candidate->getName() . '.backup');
 
         // config.json 內所設定的 dir 目錄
         $newDir = $candidate->getConfig()->getDir();
