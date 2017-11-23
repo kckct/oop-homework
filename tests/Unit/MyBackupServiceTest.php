@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
@@ -16,6 +17,8 @@ use App\Services\ScheduleManager;
  */
 class MyBackupServiceTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $myBackupService;
 
     public function setUp()
@@ -54,7 +57,7 @@ class MyBackupServiceTest extends TestCase
         $this->assertInstanceOf(ScheduleManager::class, $managers[1]);
     }
 
-    public function test_執行備份simpleBackup會執行四個Handler_應會產生三個檔案()
+    public function test_執行備份simpleBackup會執行四個Handler_應會產生四個檔案且寫入資料庫my_backup及my_log()
     {
         // arrange
         // 產生測試用檔案
@@ -64,6 +67,8 @@ class MyBackupServiceTest extends TestCase
         $byteArrayToFile = 'test.txt.backup';
         // 測試完預期產生的檔案
         $copyToNewFile = 'backup/test.txt.backup';
+        $testFileName2 = 'test.docx';
+        Storage::put($testFileName2, '123');
 
         // act
         $this->myBackupService->simpleBackup();
@@ -73,6 +78,7 @@ class MyBackupServiceTest extends TestCase
         $this->assertTrue(Storage::exists($testFileName));
         $this->assertTrue(Storage::exists($byteArrayToFile));
         $this->assertTrue(Storage::exists($copyToNewFile));
+        $this->assertTrue(Storage::exists($testFileName2));
 
         // 測試結束刪除檔案
         Storage::delete($testFileName);
@@ -81,6 +87,18 @@ class MyBackupServiceTest extends TestCase
         $this->assertFalse(Storage::exists($copyToNewFile));
         Storage::delete($byteArrayToFile);
         $this->assertFalse(Storage::exists($byteArrayToFile));
+        Storage::delete($testFileName2);
+        $this->assertFalse(Storage::exists($testFileName2));
+
+        // 應寫入 my_backup
+        $this->assertDatabaseHas('my_backup', [
+            'name' => 'D:\\Projects\\oop-homework\\storage\\app\\test.docx',
+        ]);
+
+        // 應寫入 my_log
+        $this->assertDatabaseHas('my_log', [
+            'name' => 'D:\\Projects\\oop-homework\\storage\\app\\test.docx',
+        ]);
     }
 
     public function test_執行備份scheduledBackup_Everyday且現在時間_會執行四個Handler_應會產生四個檔案()
