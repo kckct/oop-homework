@@ -23,7 +23,7 @@ class Config
     private $ext;
 
     /** @var array 處理方式 */
-    private $handler;
+    private $handlers;
 
     /** @var string 備份檔案的目錄 */
     private $location;
@@ -47,7 +47,7 @@ class Config
         $this->destination      = $item->get('destination', '');
         $this->dir              = $item->get('dir', '');
         $this->ext              = $item->get('ext', '');
-        $this->handler          = $item->get('handler', []);
+        $this->handlers         = $item->get('handlers', []);
         $this->location         = $item->get('location', '');
         $this->remove           = $item->get('remove', false);
         $this->subDirectory     = $item->get('subDirectory', false);
@@ -89,9 +89,9 @@ class Config
     /**
      * @return array
      */
-    public function getHandler(): array
+    public function getHandlers(): array
     {
-        return $this->handler;
+        return $this->handlers;
     }
 
     /**

@@ -35,7 +35,7 @@ class ConfigTest extends TestCase
         $this->assertObjectHasAttribute('destination', $config);
         $this->assertObjectHasAttribute('dir', $config);
         $this->assertObjectHasAttribute('ext', $config);
-        $this->assertObjectHasAttribute('handler', $config);
+        $this->assertObjectHasAttribute('handlers', $config);
         $this->assertObjectHasAttribute('location', $config);
         $this->assertObjectHasAttribute('remove', $config);
         $this->assertObjectHasAttribute('subDirectory', $config);
@@ -45,7 +45,7 @@ class ConfigTest extends TestCase
         $this->assertEquals('', $config->getDestination());
         $this->assertEquals('', $config->getDir());
         $this->assertEquals('', $config->getExt());
-        $this->assertEquals([], $config->getHandler());
+        $this->assertEquals([], $config->getHandlers());
         $this->assertEquals('', $config->getLocation());
         $this->assertFalse($config->isRemove());
         $this->assertFalse($config->isSubDirectory());
@@ -61,7 +61,7 @@ class ConfigTest extends TestCase
             'subDirectory'     => true,
             'unit'             => 'file',
             'remove'           => false,
-            'handler'          => ['zip', 'encode'],
+            'handlers'         => ['zip', 'encode'],
             'destination'      => 'directory',
             'dir'              => 'd:\\yyy',
             'connectionString' => 'zzz',
@@ -77,7 +77,7 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->isSubDirectory());
         $this->assertEquals('file', $config->getUnit());
         $this->assertFalse($config->isRemove());
-        $this->assertEquals(['zip', 'encode'], $config->getHandler());
+        $this->assertEquals(['zip', 'encode'], $config->getHandlers());
         $this->assertEquals('directory', $config->getDestination());
         $this->assertEquals('d:\\yyy', $config->getDir());
         $this->assertEquals('zzz', $config->getConnectionString());

@@ -57,7 +57,7 @@ class ConfigManagerTest extends TestCase
         $this->assertFalse($configs[0]->isSubDirectory());
         $this->assertEquals('file', $configs[0]->getUnit());
         $this->assertFalse($configs[0]->isRemove());
-        $this->assertEquals(['zip', 'encode'], $configs[0]->getHandler());
+        $this->assertEquals(['zip', 'encode'], $configs[0]->getHandlers());
         $this->assertEquals('directory', $configs[0]->getDestination());
         $this->assertEquals('D:\\Projects\\oop-homework\\storage\\app\\backup', $configs[0]->getDir());
         $this->assertEquals('', $configs[0]->getConnectionString());

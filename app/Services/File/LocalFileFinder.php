@@ -60,7 +60,7 @@ class LocalFileFinder extends AbstractFileFinder
     {
         $data['config']       = $this->config;
         $data['fileDateTime'] = Carbon::createFromTimestamp(File::lastModified($fileName))->toDateTimeString();
-        $data['name']         = File::basename($fileName);
+        $data['name']         = $fileName;
         $data['processName']  = '';
         $data['size']         = File::size($fileName);
 

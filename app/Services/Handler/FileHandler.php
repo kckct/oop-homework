@@ -3,7 +3,6 @@
 namespace App\Services\Handler;
 
 use App\Services\Candidate;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use League\Flysystem\FileNotFoundException;
 
@@ -44,16 +43,13 @@ class FileHandler extends AbstractHandler
         // 檔名
         $fileName = $candidate->getName();
 
-        // 檔案路徑
-        $filePath = $candidate->getConfig()->getLocation() . DIRECTORY_SEPARATOR . $fileName;
-
         // 若檔案不存在丟 exception
-        if (empty($fileName) || !file_exists($filePath)) {
-            throw new FileNotFoundException("$filePath 檔案不存在");
+        if (empty($fileName) || !file_exists($fileName)) {
+            throw new FileNotFoundException("$fileName 檔案不存在");
         }
 
         // 讀取檔案成 string
-        $content = File::get($filePath);
+        $content = File::get($fileName);
 
         // 以 char 為單位轉成 array
         return unpack('C*', $content);
@@ -75,6 +71,6 @@ class FileHandler extends AbstractHandler
         $content = pack('C*', ...$target);
 
         // 寫入檔案
-        Storage::put($fileName, $content);
+        File::put($fileName, $content);
     }
 }
