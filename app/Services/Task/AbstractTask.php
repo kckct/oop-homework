@@ -61,7 +61,7 @@ abstract class AbstractTask implements Task
         $handlers[] = HandlerFactory::create('file');
 
         // 加入 config.json 內設定的 handler
-        foreach ($candidate->getConfig()->getHandler() as $handler) {
+        foreach ($candidate->getConfig()->getHandlers() as $handler) {
             $handlers[] = HandlerFactory::create($handler);
         }
 

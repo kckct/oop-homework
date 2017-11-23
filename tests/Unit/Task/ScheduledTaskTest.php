@@ -96,7 +96,7 @@ class ScheduledTaskTest extends TestCase
             'subDirectory'     => true,
             'unit'             => 'file',
             'remove'           => false,
-            'handler'          => ['zip', 'encode'],
+            'handlers'         => ['zip', 'encode'],
             'destination'      => 'directory',
             'dir'              => 'D:\\Projects\\oop-homework\\storage\\app\\backup',
             'connectionString' => '',

@@ -70,7 +70,7 @@ class DBAdapterTest extends TestCase
             'subDirectory'     => false,
             'unit'             => 'file',
             'remove'           => false,
-            'handler'          => ['zip', 'encode'],
+            'handlers'         => ['zip', 'encode'],
             'destination'      => 'db',
             'dir'              => '',
             'connectionString' => '',

@@ -20,7 +20,7 @@ class CreateMyLogTable extends Migration
             $table->string('destination');
             $table->string('dir');
             $table->string('ext');
-            $table->string('handler');
+            $table->string('handlers');
             $table->string('location');
             $table->boolean('remove');
             $table->boolean('subDirectory');

@@ -27,7 +27,7 @@ class DBLogHandler extends AbstractDBHandler
             'destination'      => $candidate->getConfig()->getDestination(),
             'dir'              => $candidate->getConfig()->getDir(),
             'ext'              => $candidate->getConfig()->getExt(),
-            'handler'          => json_encode($candidate->getConfig()->getHandler()),
+            'handlers'         => json_encode($candidate->getConfig()->getHandlers()),
             'location'         => $candidate->getConfig()->getLocation(),
             'remove'           => $candidate->getConfig()->isRemove(),
             'subDirectory'     => $candidate->getConfig()->isSubDirectory(),

@@ -25,7 +25,7 @@ class DBBackupHandler extends AbstractDBHandler
             'name'         => $candidate->getName(),
             'fileDateTime' => $candidate->getFileDateTime(),
             'size'         => $candidate->getSize(),
-            'handlers'     => json_encode($candidate->getConfig()->getHandler()),
+            'handlers'     => json_encode($candidate->getConfig()->getHandlers()),
             'target'       => json_encode($target),
         ]);
 

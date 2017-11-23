@@ -18,6 +18,7 @@ class CreateMyBackupTable extends Migration
             $table->string('name');
             $table->dateTime('fileDateTime');
             $table->integer('size');
+            $table->string('handlers');
             $table->text('target');
             $table->timestamps();
         });

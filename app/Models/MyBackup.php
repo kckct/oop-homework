@@ -23,6 +23,6 @@ class MyBackup extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'fileDateTime', 'size', 'target',
+        'name', 'fileDateTime', 'size', 'handlers', 'target',
     ];
 }

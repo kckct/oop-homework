@@ -23,6 +23,6 @@ class MyLog extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'connectionString', 'destination', 'dir', 'ext', 'handler', 'location', 'remove', 'subDirectory', 'unit',
+        'name', 'connectionString', 'destination', 'dir', 'ext', 'handlers', 'location', 'remove', 'subDirectory', 'unit',
     ];
 }
