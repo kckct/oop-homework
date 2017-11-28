@@ -1,0 +1,21 @@
+@startuml
+
+actor User
+
+User -> MyBackupService : simpleBackup()
+activate MyBackupService
+create TaskDispatcher
+MyBackupService -->> TaskDispatcher : new
+MyBackupService -> TaskDispatcher : simpleTask()
+activate TaskDispatcher
+TaskDispatcher -> TaskFactory : create()
+activate TaskFactory
+create SimpleTask
+TaskFactory -->> SimpleTask : new
+TaskDispatcher <<-- TaskFactory : Task
+deactivate TaskFactory
+TaskDispatcher -> SimpleTask : execute()
+deactivate TaskDispatcher
+deactivate MyBackupService
+
+@enduml
