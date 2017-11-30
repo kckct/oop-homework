@@ -1,0 +1,15 @@
+@startuml
+
+left to right direction
+
+actor normal as "一般使用者"
+actor computer as "電腦計時器"
+
+rectangle MyBackup {
+    normal -- (設定處理目標與方式)
+    normal -- (設定處理時程)
+    normal -- (執行簡單備份)
+    computer -- (執行排程備份)
+}
+
+@enduml
